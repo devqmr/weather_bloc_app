@@ -32,7 +32,7 @@ class _WeatherPageState extends State<WeatherPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Fake Weather App"),
+        title: const Text("Weather App"),
       ),
       body: BlocProvider(
         create: (context) => weatherBloc,
@@ -42,10 +42,10 @@ class _WeatherPageState extends State<WeatherPage> {
           child: BlocListener(
             bloc: weatherBloc,
             listener: (context, state) {
-              //This listener called only when the Bloc state changedm and not called with every time the UI rebuild 
+              //This listener called only when the Bloc state changedm and not called with every time the UI rebuild
               if (state is WeatherLoaded) {
-                  print("Call new city [${state.weather.cityName}]");
-                }
+                print("Call new city [${state.weather.cityName}]");
+              }
             },
             child: BlocBuilder(
               bloc: weatherBloc,
@@ -93,6 +93,16 @@ class _WeatherPageState extends State<WeatherPage> {
         Text(
           "${weather.temp.toStringAsFixed(1)} °C",
           style: const TextStyle(fontSize: 80),
+        ),
+        SizedBox(
+          width: 100,
+          height: 100,
+          child: FadeInImage(
+            image: NetworkImage(weather.icon),
+            fit: BoxFit.cover,
+            placeholder: const AssetImage(
+                'assets/images/cloudy.png'),
+          ),
         ),
         const CityInputField(),
       ],
